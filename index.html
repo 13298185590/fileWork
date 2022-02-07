@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<body onload="show()">
+  <div class="firework-container">
+    <header>
+      <h1 id="word" style="text-align:center;color: red;"></h1>
+      <h2 id="name">12312</h2>
+    </header>
+  </div>
+  <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="js/jquery.fireworks.js"></script>
+  <script type="text/javascript">
+
+    var str = "萌宠交易平台 使用trao的开发的一个支持微信小程序，app等多端项目 ，具有添加发布宠物信息 搜索 详情页等等功能";
+    // 测试
+    // console.log(str[3]);
+    // console.log($.isArray(str));  //false
+    $("#name").hide()
+    // 向名为word的div添加指定字数个span标签，方便操作
+    for (var i = 0; i < str.length; i++) {
+      // 添加str的长度个span，每一个span里面保存着一个文字
+      $("#word").append("<span>" + str[i] + "</span>");
+    }
+    var j = 0;  // 用于计数
+
+    // show()方法的另外一种书写方式
+    show = function () {
+      // $("#word>span"):jQuery语法，选择器，选中word其中的所有span标签
+      // eq()：选择元素，返回jQuery对象
+      $("#word>span").eq(j).animate({ opacity: "1" }, 100);
+      j += 1;
+      // setTimeout("要做的动作（方法名）", 时间（毫秒）)
+      // 这里用到了递归实现
+      var t = setTimeout("show()", 150);
+      if (j >= str.length) {
+        clearTimeout(t);  // 清除延时动作，退出递归
+        setTimeout(() => {
+          $("#word").hide()
+          $('.firework-container').fireworks({
+            sound: false, // sound effect
+            opacity: 0.9,
+            width: '100%',
+            height: '100%'
+          });
+        }, 2000)
+      }
+    }
+  </script>
+</body>
+<style>
+  #word>span {
+    opacity: 0;
+  }
+  .firework-container{
+    width: 100%;
+    height: 100%;
+  }
+  body{
+    background-image: url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinakd20201231s%2F67%2Fw1000h667%2F20201231%2F108c-kfxsuvx5149434.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1645853802&t=6980c551e0bb0741d9b8c4a90437ee2a');
+  }
+</style>
+
+</html>
